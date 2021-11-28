@@ -1,0 +1,64 @@
+<%- include ("../partials/header") %>
+<div class="ui main text container segment" style="margin-bottom:20px">
+
+<h1 class="ui huge header">
+	<%= blog.title %>
+</h1>
+<img class="ui centered rounded image"src="<%= blog.img %>">
+<p class="description">
+	<%-blog.cont %>
+</p>
+<p class="content">
+	Post created on:
+	<%= blog.date.toDateString() %>
+	By:<a href="/profile/<%=blog.author.id%>"><%=blog.author.username %></a> 
+</p>
+<% if(currentUser && currentUser._id.equals(blog.author.id)){%>
+<a class="ui mini inverted orange button" href="/index/<%=blog._id%>/edit">EDIT</a>
+<form style="display:inline" action="/index/<%=blog._id%>?_method=DELETE" method="POST">
+	<button class="ui mini inverted red button">
+		DELETE
+	</button>
+	</form>
+<%}%>
+</div>
+<!--------------------------------------------------------------------------------------------------------->
+<div class="ui main text container segment" style="margin-bottom:100px">
+<div class="ui comments">
+	<h3 class="ui dividing header">Comments</h3>
+<% blog.comment.forEach((c) =>{ %>
+  <div class="comment">
+       
+    <div class="content">
+		 
+      <a class="author"><%=c.author.username%></a>
+      <div class="metadata">
+        <div class="date"><%=c.date.toDateString() %></div>
+      </div>
+      <div class="text">
+        <p><%=c.text%> </p>
+      </div>
+		<% if(currentUser && currentUser._id.equals(c.author.id)){%>
+      <div class="actions">
+		  <a class='ui mini inverted orange button' href="/index/<%=blog._id%>/comment/<%=c._id%>/edit">EDIT</a>
+
+		  <form style="display:inline" action="/index/<%=blog._id%>/comment/<%=c._id%>?_method=DELETE" method="POST">
+			  <button class='ui mini inverted red button'>
+				  DELETE
+			  </button> 
+		  </form>
+      </div>
+		<%}%>
+    </div>
+  </div>
+<%	})  %>
+  <form class="ui reply form" action="/index/<%=blog._id%>/comment" method="POST">
+    <div class="field">
+      <input type="text" name="comment[text]">
+    </div>
+    <button type="submit" class="ui inverted secondary button submit labeled icon button">
+		<i class="icon edit"></i> Add Comment </button>
+  </form>
+</div>
+</div>
+<%- include ("../partials/footer") %>

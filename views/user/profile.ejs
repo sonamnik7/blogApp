@@ -1,0 +1,99 @@
+<%- include ("../partials/header") %>
+
+
+
+<div class="ui main segment container" style="margin-bottom:100px">
+<div class="ui stackable two column grid">
+<div class="six wide column">
+<!--------------------------------------------------------------------------------------------->
+
+
+<!-- <div class="ui main text segment container"> -->
+<!-- <div class="ui stackable two column grid">
+  <div class="six wide column"> -->
+	  <img class="ui medium centered circular image" src="<%=user.image%>">
+	  <h2 class="ui header">
+  		<%=user.username%>
+	  </h2>
+  <!-- </div> -->
+  <!-- <div class="twelve column"> -->
+<table class="ui very basic table">
+  <tbody>
+	  <%if(user.name){ %>
+    <tr>
+      <td>Name:</td>
+      <td><%=user.name%></td>
+    </tr>
+	  <%}%>
+	  <%if(user.age){ %>
+    <tr>
+      <td>Age</td>
+      <td><%=user.age%></td>
+    </tr>
+	  <%}%>
+	  <%if(user.Gender){ %>
+    <tr>
+      <td>Gender</td>
+      <td><%=user.Gender%></td>
+    </tr>
+	  <%}%>
+	  <tr>
+      <td>Joined</td>
+      <td><%=user.joined.toDateString()%></td>
+    </tr>
+  </tbody>
+</table>
+	  <h5 class="ui header">
+  		About me
+  		<div class="sub header"><%=user.about%></div>
+	 </h5>
+	<% if(currentUser && currentUser._id.equals(user._id)) { %>
+	<a href="/profile/<%=user._id%>/edit">Edit</a>
+	<%} %>
+  <!-- </div>
+</div> -->
+<!-- </div> -->
+<!------------------------------------------------------------------------------------->
+	</div><div class="twelve column">
+<!------------------------------------------------------------------------------------->
+<!-- <div class="ui main text container"> -->
+	<div class="ui huge header">
+		Blogs by <%=user.username %>
+	</div>
+	<% if(blog.length>0) {%>
+	<% blog.forEach((b) => { %>
+	<div class="ui top attached segment">
+		
+		<div class="ui divided items">
+			
+			<div class="item">
+				<div class="image">
+					<img src="<%=b.img %>">
+				</div>
+				<div class="content">
+					<a class="header" href="/index/<%= b._id %>"><%= b.title %></a>
+					<div class="meta">
+						<span><%=b.date.toDateString()%></span>
+					</div>
+					<div class="description">
+						<p>
+							<%-b.cont.substring(0, 200) %>....
+						</p>	
+					</div>
+				</div>
+			</div>
+					
+		</div>
+	</div>
+	<% }) %>
+
+<%} else { %>
+<div class="ui huge header">
+		Nothing to show.
+	</div>
+	<% } %>
+	<!-- </div> -->
+<!------------------------------------------------------------------------------------------------------->
+	</div></div></div>
+
+<%- include ("../partials/footer") %>
